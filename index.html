@@ -1,0 +1,1292 @@
+<!DOCTYPE html>
+<html lang="pt-BR"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  
+  <!-- Configurações Nativas de Web App (PWA) para iOS / iPhone -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Gym">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="theme-color" content="#191919" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+
+  <title>Gym</title>
+
+  <!-- Favicon & Apple Touch Icon dinâmico -->
+  <link id="favicon" rel="icon" href="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;rect width=%22100%22 height=%22100%22 rx=%2222%22 fill=%22%23191919%22/&gt;&lt;text y=%22.88em%22 x=%2250%%22 text-anchor=%22middle%22 font-size=%2268%22&gt;🏋🏻‍♂️&lt;/text&gt;&lt;/svg&gt;">
+  <link id="apple-icon" rel="apple-touch-icon" href="data:image/png;base64,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">
+
+  <style>
+    :root {
+      --bg-main: #ffffff;
+      --bg-card: #f7f7f5;
+      --bg-card-hover: #efefed;
+      --bg-modal: #ffffff;
+      --bg-input: #efefed;
+      --text-main: #1f1f1f;
+      --text-muted: #787774;
+      --border-color: #e6e6e4;
+      --accent-blue: #2383e2;
+      --accent-green: #2b9a66;
+      --accent-green-bg: rgba(43, 154, 102, 0.14);
+      --danger: #e03e3e;
+      --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg-main: #191919;
+        --bg-card: #202020;
+        --bg-card-hover: #262626;
+        --bg-modal: #202020;
+        --bg-input: #2a2a2a;
+        --text-main: #ebebeb;
+        --text-muted: #9b9b9b;
+        --border-color: #2f2f2f;
+        --accent-blue: #2383e2;
+        --accent-green: #4dab7f;
+        --accent-green-bg: rgba(77, 171, 127, 0.18);
+        --danger: #eb5757;
+        --shadow: 0 8px 30px rgba(0, 0, 0, 0.45);
+      }
+    }
+
+    html[data-theme="light"] {
+      --bg-main: #ffffff;
+      --bg-card: #f7f7f5;
+      --bg-card-hover: #efefed;
+      --bg-modal: #ffffff;
+      --bg-input: #efefed;
+      --text-main: #1f1f1f;
+      --text-muted: #787774;
+      --border-color: #e6e6e4;
+      --accent-blue: #2383e2;
+      --accent-green: #2b9a66;
+      --accent-green-bg: rgba(43, 154, 102, 0.14);
+      --danger: #e03e3e;
+      --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    }
+
+    html[data-theme="dark"] {
+      --bg-main: #191919;
+      --bg-card: #202020;
+      --bg-card-hover: #262626;
+      --bg-modal: #202020;
+      --bg-input: #2a2a2a;
+      --text-main: #ebebeb;
+      --text-muted: #9b9b9b;
+      --border-color: #2f2f2f;
+      --accent-blue: #2383e2;
+      --accent-green: #4dab7f;
+      --accent-green-bg: rgba(77, 171, 127, 0.18);
+      --danger: #eb5757;
+      --shadow: 0 8px 30px rgba(0, 0, 0, 0.45);
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      margin: 0;
+      padding: env(safe-area-inset-top, 16px) 16px env(safe-area-inset-bottom, 32px) 16px;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      transition: background-color 0.2s, color 0.2s;
+    }
+
+    .container {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding-top: 12px;
+    }
+
+    /* Header */
+    .header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .title-area h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      margin: 0 0 4px 0;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .title-area p {
+      margin: 0;
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+
+    .top-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      background: var(--bg-card);
+      color: var(--text-main);
+      border: 1px solid var(--border-color);
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: background 0.15s;
+    }
+
+    .btn:hover {
+      background: var(--bg-card-hover);
+    }
+
+    .btn-primary {
+      background: var(--accent-blue);
+      color: #ffffff;
+      border-color: var(--accent-blue);
+      font-weight: 600;
+    }
+
+    .btn-primary:hover {
+      opacity: 0.92;
+      background: var(--accent-blue);
+    }
+
+    /* Navigation Tabs + New Button */
+    .toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 10px;
+      margin-bottom: 20px;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .tabs {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      padding-bottom: 2px;
+    }
+
+    .tab-btn {
+      background: transparent;
+      color: var(--text-muted);
+      border: none;
+      padding: 7px 13px;
+      border-radius: 18px;
+      font-size: 0.88rem;
+      font-weight: 500;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .tab-btn.active {
+      background: var(--bg-card);
+      color: var(--text-main);
+      border: 1px solid var(--border-color);
+    }
+
+    .new-dropdown-wrapper {
+      position: relative;
+    }
+
+    .dropdown-menu {
+      position: absolute;
+      right: 0;
+      top: calc(100% + 6px);
+      background: var(--bg-modal);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      box-shadow: var(--shadow);
+      min-width: 240px;
+      z-index: 100;
+      display: none;
+      overflow: hidden;
+    }
+
+    .dropdown-menu.open {
+      display: block;
+    }
+
+    .dropdown-header {
+      padding: 8px 12px;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .dropdown-item {
+      width: 100%;
+      text-align: left;
+      background: none;
+      border: none;
+      color: var(--text-main);
+      padding: 11px 14px;
+      font-size: 0.92rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .dropdown-item:hover {
+      background: var(--bg-card-hover);
+    }
+
+    /* Gallery Grid */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 14px;
+    }
+
+    .workout-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      overflow: hidden;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform 0.12s, background 0.15s;
+    }
+
+    .workout-card:hover {
+      background: var(--bg-card-hover);
+    }
+
+    .card-preview {
+      padding: 14px;
+      font-size: 0.84rem;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      border-bottom: 1px solid var(--border-color);
+      min-height: 155px;
+    }
+
+    .preview-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      line-height: 1.35;
+    }
+
+    .preview-checkbox {
+      width: 15px;
+      height: 15px;
+      border-radius: 3px;
+      border: 1.5px solid var(--text-muted);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+      font-size: 10px;
+      color: #fff;
+    }
+
+    .preview-checkbox.checked {
+      background: var(--accent-blue);
+      border-color: var(--accent-blue);
+    }
+
+    .preview-text.done {
+      text-decoration: line-through;
+      color: var(--text-muted);
+    }
+
+    .card-footer {
+      padding: 11px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .card-title {
+      font-weight: 600;
+      font-size: 0.92rem;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .card-date {
+      font-size: 0.76rem;
+      color: var(--text-muted);
+    }
+
+    .new-page-card {
+      border: 1px dashed var(--border-color);
+      background: transparent;
+      border-radius: 10px;
+      min-height: 190px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      cursor: pointer;
+    }
+
+    .new-page-card:hover {
+      background: var(--bg-card);
+      color: var(--text-main);
+    }
+
+    /* Modal / Notion Page View */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.65);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 200;
+      padding: 12px;
+    }
+
+    .modal-backdrop.open {
+      display: flex;
+    }
+
+    .modal-sheet {
+      background: var(--bg-modal);
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      width: 100%;
+      max-width: 720px;
+      max-height: 92vh;
+      overflow-y: auto;
+      padding: 22px;
+      box-shadow: var(--shadow);
+    }
+
+    .modal-top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+    }
+
+    .dumbbell-icon {
+      font-size: 2.2rem;
+      color: var(--accent-green);
+      margin-bottom: 6px;
+    }
+
+    .page-title-input {
+      width: 100%;
+      background: transparent;
+      border: none;
+      color: var(--text-main);
+      font-size: 1.75rem;
+      font-weight: 700;
+      margin-bottom: 16px;
+      outline: none;
+    }
+
+    .props-grid {
+      display: grid;
+      grid-template-columns: 130px 1fr;
+      row-gap: 10px;
+      column-gap: 12px;
+      align-items: center;
+      font-size: 0.9rem;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border-color);
+      margin-bottom: 18px;
+    }
+
+    .prop-label {
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .prop-input {
+      background: transparent;
+      border: 1px solid transparent;
+      color: var(--text-main);
+      padding: 6px 8px;
+      border-radius: 6px;
+      font-size: 16px;
+      width: 100%;
+    }
+
+    .prop-input:focus {
+      border-color: var(--accent-blue);
+      background: var(--bg-input);
+      outline: none;
+    }
+
+    .location-badge {
+      display: inline-block;
+      background: var(--accent-green-bg);
+      color: var(--accent-green);
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      font-weight: 500;
+    }
+
+    /* Exercise Rows in Modal */
+    .exercise-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .exercise-row {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .exercise-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .exercise-check-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex: 1;
+    }
+
+    .big-checkbox {
+      width: 22px;
+      height: 22px;
+      accent-color: var(--accent-blue);
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    .exercise-name {
+      font-weight: 600;
+      font-size: 1rem;
+    }
+
+    .exercise-name.done {
+      text-decoration: line-through;
+      color: var(--text-muted);
+    }
+
+    .target-presc {
+      color: var(--text-muted);
+      font-size: 0.86rem;
+      font-weight: 500;
+    }
+
+    .last-memory-badge {
+      background: var(--accent-green-bg);
+      color: var(--accent-green);
+      font-size: 0.78rem;
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-weight: 600;
+    }
+
+    .exercise-controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .stepper-group {
+      display: flex;
+      align-items: center;
+      background: var(--bg-input);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .stepper-label {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      padding-left: 10px;
+      padding-right: 4px;
+    }
+
+    .stepper-input {
+      width: 78px;
+      background: transparent;
+      border: none;
+      color: var(--text-main);
+      font-size: 16px;
+      font-weight: 600;
+      text-align: center;
+      padding: 8px 4px;
+      outline: none;
+    }
+
+    .stepper-btn {
+      width: 38px;
+      height: 38px;
+      border: none;
+      background: var(--bg-card);
+      color: var(--text-main);
+      font-size: 1.1rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .stepper-btn:active {
+      background: var(--accent-blue);
+      color: #fff;
+    }
+
+    /* Table & Calendar views */
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+      background: var(--bg-card);
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid var(--border-color);
+    }
+
+    .data-table th, .data-table td {
+      padding: 12px 14px;
+      text-align: left;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .data-table th {
+      color: var(--text-muted);
+      font-weight: 600;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+    }
+
+    @media (max-width: 600px) {
+      .modal-sheet {
+        padding: 16px;
+        max-height: 95vh;
+      }
+      .props-grid {
+        grid-template-columns: 110px 1fr;
+      }
+      .exercise-controls {
+        justify-content: space-between;
+      }
+      .stepper-group {
+        flex: 1;
+        justify-content: space-between;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Top Header -->
+    <div class="header-top">
+      <div class="title-area">
+        <h1><span>🏋🏻‍♂️</span> Gym</h1>
+        <p>Just do it.</p>
+      </div>
+      <div class="top-actions">
+        <button class="btn" id="themeBtn" onclick="cycleTheme()">🌓 Auto</button>
+        <button class="btn" onclick="exportBackup()">💾 Backup JSON</button>
+        <button class="btn btn-primary" onclick="downloadSelfHtml()">⬇️ Baixar index.html (GitHub)</button>
+      </div>
+    </div>
+
+    <!-- Notion Style Toolbar -->
+    <div class="toolbar">
+      <div class="tabs">
+        <button class="tab-btn active" data-view="gallery" onclick="switchView('gallery')">⊞ Gallery view</button>
+        <button class="tab-btn" data-view="progression" onclick="switchView('progression')">📈 Sobrecarga / Cargas</button>
+        <button class="tab-btn" data-view="templates" onclick="switchView('templates')">📋 Templates (A/B/C)</button>
+      </div>
+
+      <div class="new-dropdown-wrapper">
+        <button class="btn btn-primary" onclick="toggleNewMenu(event)">＋ New ▾</button>
+        <div class="dropdown-menu" id="newDropdown">
+          <div class="dropdown-header">Criar treino com memória automática</div>
+          <div id="dropdownTemplatesList">
+        <button class="dropdown-item" onclick="createNewWorkoutFromTemplate('tpl-a')">
+          <span>🟩</span>
+          <span>Treino A - Upper</span>
+        </button>
+      
+        <button class="dropdown-item" onclick="createNewWorkoutFromTemplate('tpl-b')">
+          <span>🟩</span>
+          <span>Treino B - Lower + deltoide</span>
+        </button>
+      
+        <button class="dropdown-item" onclick="createNewWorkoutFromTemplate('tpl-c')">
+          <span>🟩</span>
+          <span>Treino C - Upper</span>
+        </button>
+      </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Content Container -->
+    <div id="viewContainer">
+          <div class="gallery-grid">
+            
+            <div class="workout-card" onclick="openWorkoutModal('log-1')">
+              <div class="card-preview">
+              <div class="preview-item">
+                <span class="preview-checkbox checked">✓</span>
+                <span class="preview-text done">Puxada alta — 3 × 6–10 3x10 4pl</span>
+              </div>
+            
+              <div class="preview-item">
+                <span class="preview-checkbox checked">✓</span>
+                <span class="preview-text done">Supino inclinado halteres — 3 × 6–10 3x10 9kg</span>
+              </div>
+            
+              <div class="preview-item">
+                <span class="preview-checkbox checked">✓</span>
+                <span class="preview-text done">Remada — 3 × 8–12 3x10 4pl</span>
+              </div>
+            
+              <div class="preview-item">
+                <span class="preview-checkbox checked">✓</span>
+                <span class="preview-text done">Elevação lateral — 3 × 10–15 3x10 4kg</span>
+              </div>
+            
+              <div class="preview-item">
+                <span class="preview-checkbox checked">✓</span>
+                <span class="preview-text done">Tríceps polia — 2 × 10–15 3x12 4pl</span>
+              </div>
+            </div>
+              <div class="card-footer">
+                <div class="card-title"><span>🟩</span> Treino A - Upper</div>
+                <div class="card-date">13/10/2026</div>
+              </div>
+            </div>
+          
+            <div class="workout-card" onclick="openWorkoutModal('log-2')">
+              <div class="card-preview">
+              <div class="preview-item">
+                <span class="preview-checkbox checked">✓</span>
+                <span class="preview-text done">Supino reto — 3 × 6–10 3x10 3pl</span>
+              </div>
+            
+              <div class="preview-item">
+                <span class="preview-checkbox checked">✓</span>
+                <span class="preview-text done">Puxada neutra — 3 × 6–10 3x10 3pl</span>
+              </div>
+            
+              <div class="preview-item">
+                <span class="preview-checkbox checked">✓</span>
+                <span class="preview-text done">Remada — 3 × 8–12 3x10 3pl</span>
+              </div>
+            
+              <div class="preview-item">
+                <span class="preview-checkbox checked">✓</span>
+                <span class="preview-text done">Elevação lateral — 3 × 10–15 3x10 3pl</span>
+              </div>
+            
+              <div class="preview-item">
+                <span class="preview-checkbox checked">✓</span>
+                <span class="preview-text done">Rosca bíceps — 2 × 10–15 2x10 5kg</span>
+              </div>
+            </div>
+              <div class="card-footer">
+                <div class="card-title"><span>🟩</span> Treino C - Upper</div>
+                <div class="card-date">10/10/2026</div>
+              </div>
+            </div>
+          
+            <div class="workout-card" onclick="openWorkoutModal('log-3')">
+              <div class="card-preview">
+              <div class="preview-item">
+                <span class="preview-checkbox checked">✓</span>
+                <span class="preview-text done">Leg press — 3 × 6–10 3x10 40kg</span>
+              </div>
+            
+              <div class="preview-item">
+                <span class="preview-checkbox checked">✓</span>
+                <span class="preview-text done">Mesa/cadeira flexora — 3 × 8–12 3x12 6pl</span>
+              </div>
+            
+              <div class="preview-item">
+                <span class="preview-checkbox checked">✓</span>
+                <span class="preview-text done">Cadeira extensora — 2 × 10–15 3x10 4pl</span>
+              </div>
+            
+              <div class="preview-item">
+                <span class="preview-checkbox checked">✓</span>
+                <span class="preview-text done">Panturrilha — 2 × 10–15 3x12 10kg</span>
+              </div>
+            
+              <div class="preview-item">
+                <span class="preview-checkbox checked">✓</span>
+                <span class="preview-text done">Elevação lateral — 3 × 10–15 3x10 4kg</span>
+              </div>
+            </div>
+              <div class="card-footer">
+                <div class="card-title"><span>🟩</span> Treino B - Lower + deltoide</div>
+                <div class="card-date">08/10/2026</div>
+              </div>
+            </div>
+          
+            <button class="new-page-card" onclick="toggleNewMenu(event)">+ New page</button>
+          </div>
+        </div>
+  </div>
+
+  <!-- Workout Modal -->
+  <div class="modal-backdrop" id="workoutModal" onclick="closeModalOnBackdrop(event)">
+    <div class="modal-sheet">
+      <div class="modal-top-bar">
+        <span style="font-size: 0.82rem; color: var(--text-muted);">✓ Salvo automaticamente no aparelho</span>
+        <div style="display:flex; gap:8px;">
+          <button class="btn" style="color:var(--danger);" onclick="deleteCurrentWorkout()">🗑️ Excluir</button>
+          <button class="btn btn-primary" onclick="closeWorkoutModal()">Concluir</button>
+        </div>
+      </div>
+
+      <div class="dumbbell-icon">🟩</div>
+      <input type="text" id="modalTitle" class="page-title-input" oninput="updateCurrentWorkoutField('title', this.value)">
+
+      <div class="props-grid">
+        <div class="prop-label">📅 Date</div>
+        <input type="date" id="modalDate" class="prop-input" onchange="updateCurrentWorkoutField('date', this.value)">
+
+        <div class="prop-label">📍 Location</div>
+        <div><span class="location-badge" id="modalLocation">Itaigara Fitness</span></div>
+
+        <div class="prop-label">⏱️ Tempo (min)</div>
+        <input type="text" id="modalDuration" class="prop-input" placeholder="Ex: 55" oninput="updateCurrentWorkoutField('duration', this.value)">
+
+        <div class="prop-label">🏃 Km / Pace</div>
+        <input type="text" id="modalCardio" class="prop-input" placeholder="Opcional (ex: 3km - 6'15)" oninput="updateCurrentWorkoutField('cardio', this.value)">
+      </div>
+
+      <div class="exercise-list" id="modalExercisesList"></div>
+    </div>
+  </div>
+
+  <script>
+    const STORAGE_KEY = 'lucas_gym_notion_pwa_v2';
+    const THEME_KEY = 'lucas_gym_theme_pref';
+
+    const DEFAULT_DATA = {
+      templates: [
+        {
+          id: 'tpl-a',
+          title: 'Treino A - Upper',
+          location: 'Itaigara Fitness',
+          exercises: [
+            { name: 'Puxada alta', target: '3 × 6–10', defaultSets: '3x10', defaultWeight: '4pl' },
+            { name: 'Supino inclinado halteres', target: '3 × 6–10', defaultSets: '3x10', defaultWeight: '9kg' },
+            { name: 'Remada', target: '3 × 8–12', defaultSets: '3x10', defaultWeight: '4pl' },
+            { name: 'Elevação lateral', target: '3 × 10–15', defaultSets: '3x10', defaultWeight: '4kg' },
+            { name: 'Tríceps polia', target: '2 × 10–15', defaultSets: '3x12', defaultWeight: '4pl' }
+          ]
+        },
+        {
+          id: 'tpl-b',
+          title: 'Treino B - Lower + deltoide',
+          location: 'Itaigara Fitness',
+          exercises: [
+            { name: 'Leg press', target: '3 × 6–10', defaultSets: '3x10', defaultWeight: '40kg' },
+            { name: 'Mesa/cadeira flexora', target: '3 × 8–12', defaultSets: '3x12', defaultWeight: '6pl' },
+            { name: 'Cadeira extensora', target: '2 × 10–15', defaultSets: '3x10', defaultWeight: '4pl' },
+            { name: 'Panturrilha', target: '2 × 10–15', defaultSets: '3x12', defaultWeight: '10kg' },
+            { name: 'Elevação lateral', target: '3 × 10–15', defaultSets: '3x10', defaultWeight: '4kg' }
+          ]
+        },
+        {
+          id: 'tpl-c',
+          title: 'Treino C - Upper',
+          location: 'Itaigara Fitness',
+          exercises: [
+            { name: 'Supino reto', target: '3 × 6–10', defaultSets: '3x10', defaultWeight: '3pl' },
+            { name: 'Puxada neutra', target: '3 × 6–10', defaultSets: '3x10', defaultWeight: '3pl' },
+            { name: 'Remada', target: '3 × 8–12', defaultSets: '3x10', defaultWeight: '3pl' },
+            { name: 'Elevação lateral', target: '3 × 10–15', defaultSets: '3x10', defaultWeight: '3pl' },
+            { name: 'Rosca bíceps', target: '2 × 10–15', defaultSets: '2x10', defaultWeight: '5kg' }
+          ]
+        }
+      ],
+      logs: [
+        {
+          id: 'log-1',
+          templateId: 'tpl-a',
+          title: 'Treino A - Upper',
+          date: '2026-10-13',
+          location: 'Itaigara Fitness',
+          duration: '',
+          cardio: '',
+          exercises: [
+            { name: 'Puxada alta', target: '3 × 6–10', setsReps: '3x10', weight: '4pl', done: true },
+            { name: 'Supino inclinado halteres', target: '3 × 6–10', setsReps: '3x10', weight: '9kg', done: true },
+            { name: 'Remada', target: '3 × 8–12', setsReps: '3x10', weight: '4pl', done: true },
+            { name: 'Elevação lateral', target: '3 × 10–15', setsReps: '3x10', weight: '4kg', done: true },
+            { name: 'Tríceps polia', target: '2 × 10–15', setsReps: '3x12', weight: '4pl', done: true }
+          ]
+        },
+        {
+          id: 'log-2',
+          templateId: 'tpl-c',
+          title: 'Treino C - Upper',
+          date: '2026-10-10',
+          location: 'Itaigara Fitness',
+          duration: '',
+          cardio: '',
+          exercises: [
+            { name: 'Supino reto', target: '3 × 6–10', setsReps: '3x10', weight: '3pl', done: true },
+            { name: 'Puxada neutra', target: '3 × 6–10', setsReps: '3x10', weight: '3pl', done: true },
+            { name: 'Remada', target: '3 × 8–12', setsReps: '3x10', weight: '3pl', done: true },
+            { name: 'Elevação lateral', target: '3 × 10–15', setsReps: '3x10', weight: '3pl', done: true },
+            { name: 'Rosca bíceps', target: '2 × 10–15', setsReps: '2x10', weight: '5kg', done: true }
+          ]
+        },
+        {
+          id: 'log-3',
+          templateId: 'tpl-b',
+          title: 'Treino B - Lower + deltoide',
+          date: '2026-10-08',
+          location: 'Itaigara Fitness',
+          duration: '',
+          cardio: '',
+          exercises: [
+            { name: 'Leg press', target: '3 × 6–10', setsReps: '3x10', weight: '40kg', done: true },
+            { name: 'Mesa/cadeira flexora', target: '3 × 8–12', setsReps: '3x12', weight: '6pl', done: true },
+            { name: 'Cadeira extensora', target: '2 × 10–15', setsReps: '3x10', weight: '4pl', done: true },
+            { name: 'Panturrilha', target: '2 × 10–15', setsReps: '3x12', weight: '10kg', done: true },
+            { name: 'Elevação lateral', target: '3 × 10–15', setsReps: '3x10', weight: '4kg', done: true }
+          ]
+        }
+      ]
+    };
+
+    let state = loadState();
+    let currentView = 'gallery';
+    let activeLogId = null;
+
+    function loadState() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (raw) return JSON.parse(raw);
+      } catch (e) {}
+      return JSON.parse(JSON.stringify(DEFAULT_DATA));
+    }
+
+    function saveState() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    }
+
+    // Busca no histórico a última vez que o exercício foi feito
+    function getLastExerciseMemory(exerciseName, excludeLogId = null) {
+      const sortedLogs = [...state.logs].sort((a, b) => (b.date || '').localeCompare(a.date || ''));
+      for (const log of sortedLogs) {
+        if (excludeLogId && log.id === excludeLogId) continue;
+        const found = log.exercises.find(
+          ex => ex.name.trim().toLowerCase() === exerciseName.trim().toLowerCase() && (ex.weight || ex.setsReps)
+        );
+        if (found) {
+          return {
+            setsReps: found.setsReps,
+            weight: found.weight,
+            date: log.date
+          };
+        }
+      }
+      return null;
+    }
+
+    function renderDropdownTemplates() {
+      const container = document.getElementById('dropdownTemplatesList');
+      container.innerHTML = state.templates.map(tpl => `
+        <button class="dropdown-item" onclick="createNewWorkoutFromTemplate('${tpl.id}')">
+          <span>🟩</span>
+          <span>${tpl.title}</span>
+        </button>
+      `).join('');
+    }
+
+    function toggleNewMenu(e) {
+      e.stopPropagation();
+      document.getElementById('newDropdown').classList.toggle('open');
+    }
+
+    document.addEventListener('click', () => {
+      const menu = document.getElementById('newDropdown');
+      if (menu) menu.classList.remove('open');
+    });
+
+    function createNewWorkoutFromTemplate(tplId) {
+      const tpl = state.templates.find(t => t.id === tplId);
+      if (!tpl) return;
+
+      const todayIso = new Date().toISOString().split('T')[0];
+
+      const exercises = tpl.exercises.map(item => {
+        const memory = getLastExerciseMemory(item.name);
+        return {
+          name: item.name,
+          target: item.target,
+          setsReps: memory ? memory.setsReps : item.defaultSets,
+          weight: memory ? memory.weight : item.defaultWeight,
+          lastMemoryText: memory ? `${memory.setsReps} ${memory.weight}`.trim() : null,
+          done: false
+        };
+      });
+
+      const newLog = {
+        id: 'log-' + Date.now(),
+        templateId: tpl.id,
+        title: tpl.title,
+        date: todayIso,
+        location: tpl.location || 'Itaigara Fitness',
+        duration: '',
+        cardio: '',
+        exercises
+      };
+
+      state.logs.unshift(newLog);
+      saveState();
+      renderView();
+      openWorkoutModal(newLog.id);
+    }
+
+    function switchView(view) {
+      currentView = view;
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.view === view);
+      });
+      renderView();
+    }
+
+    function renderView() {
+      const container = document.getElementById('viewContainer');
+      if (currentView === 'gallery') {
+        const cardsHtml = state.logs.map(log => {
+          const previewItems = log.exercises.slice(0, 5).map(ex => {
+            const summary = `${ex.name} — ${ex.target} ${ex.setsReps || ''} ${ex.weight || ''}`.trim();
+            return `
+              <div class="preview-item">
+                <span class="preview-checkbox ${ex.done ? 'checked' : ''}">${ex.done ? '✓' : ''}</span>
+                <span class="preview-text ${ex.done ? 'done' : ''}">${summary}</span>
+              </div>
+            `;
+          }).join('');
+
+          return `
+            <div class="workout-card" onclick="openWorkoutModal('${log.id}')">
+              <div class="card-preview">${previewItems}</div>
+              <div class="card-footer">
+                <div class="card-title"><span>🟩</span> ${log.title}</div>
+                <div class="card-date">${formatShortDate(log.date)}</div>
+              </div>
+            </div>
+          `;
+        }).join('');
+
+        container.innerHTML = `
+          <div class="gallery-grid">
+            ${cardsHtml}
+            <button class="new-page-card" onclick="toggleNewMenu(event)">+ New page</button>
+          </div>
+        `;
+      } else if (currentView === 'progression') {
+        const allExercisesMap = new Map();
+        state.templates.forEach(t => {
+          t.exercises.forEach(e => {
+            if (!allExercisesMap.has(e.name)) {
+              allExercisesMap.set(e.name, { target: e.target, tpl: t.title });
+            }
+          });
+        });
+
+        let rowsHtml = '';
+        allExercisesMap.forEach((info, name) => {
+          const mem = getLastExerciseMemory(name);
+          rowsHtml += `
+            <tr>
+              <td><strong>${name}</strong></td>
+              <td>${info.target}</td>
+              <td><span class="last-memory-badge">${mem ? `${mem.setsReps} •${mem.weight}` : 'Sem registro'}</span></td>
+              <td style="color:var(--text-muted)">${mem ? formatShortDate(mem.date) : '-'}</td>
+            </tr>
+          `;
+        });
+
+        container.innerHTML = `
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Exercício</th>
+                <th>Prescrição Modelo</th>
+                <th>Última Carga & Reps</th>
+                <th>Data</th>
+              </tr>
+            </thead>
+            <tbody>${rowsHtml}</tbody>
+          </table>
+        `;
+      } else if (currentView === 'templates') {
+        container.innerHTML = `
+          <div class="gallery-grid">
+            ${state.templates.map(t => `
+              <div class="workout-card" onclick="createNewWorkoutFromTemplate('${t.id}')">
+                <div class="card-preview">
+                  ${t.exercises.map(e => `
+                    <div class="preview-item">
+                      <span class="preview-checkbox"></span>
+                      <span><strong>${e.name}</strong> — ${e.target}</span>
+                    </div>
+                  `).join('')}
+                </div>
+                <div class="card-footer">
+                  <div class="card-title"><span>🟩</span> ${t.title}</div>
+                  <div class="card-date" style="color:var(--accent-blue);font-weight:600;">Usar modelo →</div>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        `;
+      }
+    }
+
+    function openWorkoutModal(logId) {
+      activeLogId = logId;
+      const log = state.logs.find(l => l.id === logId);
+      if (!log) return;
+
+      document.getElementById('modalTitle').value = log.title;
+      document.getElementById('modalDate').value = log.date || '';
+      document.getElementById('modalLocation').textContent = log.location || 'Itaigara Fitness';
+      document.getElementById('modalDuration').value = log.duration || '';
+      document.getElementById('modalCardio').value = log.cardio || '';
+
+      renderModalExercises();
+      document.getElementById('workoutModal').classList.add('open');
+    }
+
+    function renderModalExercises() {
+      const log = state.logs.find(l => l.id === activeLogId);
+      if (!log) return;
+
+      const listEl = document.getElementById('modalExercisesList');
+      listEl.innerHTML = log.exercises.map((ex, idx) => {
+        const prevMem = getLastExerciseMemory(ex.name, log.id);
+        const badgeText = prevMem ? `↺ Último: ${prevMem.setsReps} ${prevMem.weight}` : '1º registro';
+
+        return `
+          <div class="exercise-row">
+            <div class="exercise-header">
+              <label class="exercise-check-title">
+                <input type="checkbox" class="big-checkbox" ${ex.done ? 'checked' : ''} onchange="toggleExerciseDone(${idx}, this.checked)" />
+                <span class="exercise-name ${ex.done ? 'done' : ''}">${ex.name}</span>
+                <span class="target-presc">— ${ex.target}</span>
+              </label>
+              <span class="last-memory-badge">${badgeText}</span>
+            </div>
+
+            <div class="exercise-controls">
+              <div class="stepper-group">
+                <span class="stepper-label">Séries/Reps</span>
+                <button class="stepper-btn" onclick="stepSetsReps(${idx}, -1)">−</button>
+                <input type="text" class="stepper-input" value="${ex.setsReps || ''}" oninput="updateExerciseField(${idx}, 'setsReps', this.value)" />
+                <button class="stepper-btn" onclick="stepSetsReps(${idx}, 1)">＋</button>
+              </div>
+
+              <div class="stepper-group">
+                <span class="stepper-label">Carga</span>
+                <button class="stepper-btn" onclick="stepWeight(${idx}, -1)">−</button>
+                <input type="text" class="stepper-input" value="${ex.weight || ''}" oninput="updateExerciseField(${idx}, 'weight', this.value)" />
+                <button class="stepper-btn" onclick="stepWeight(${idx}, 1)">＋</button>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function toggleExerciseDone(idx, checked) {
+      const log = state.logs.find(l => l.id === activeLogId);
+      if (!log) return;
+      log.exercises[idx].done = checked;
+      saveState();
+      renderModalExercises();
+      renderView();
+    }
+
+    function updateExerciseField(idx, field, val) {
+      const log = state.logs.find(l => l.id === activeLogId);
+      if (!log) return;
+      log.exercises[idx][field] = val;
+      saveState();
+      renderView();
+    }
+
+    function stepSetsReps(idx, delta) {
+      const log = state.logs.find(l => l.id === activeLogId);
+      if (!log) return;
+      const current = log.exercises[idx].setsReps || '3x10';
+      const match = current.match(/^(\d+)\s*[xX×]\s*(\d+)$/);
+      if (match) {
+        const sets = parseInt(match[1], 10);
+        const reps = Math.max(1, parseInt(match[2], 10) + delta);
+        log.exercises[idx].setsReps = `${sets}x${reps}`;
+      } else {
+        const numMatch = current.match(/(\d+)/);
+        if (numMatch) {
+          const next = Math.max(1, parseInt(numMatch[1], 10) + delta);
+          log.exercises[idx].setsReps = current.replace(/\d+/, next);
+        }
+      }
+      saveState();
+      renderModalExercises();
+      renderView();
+    }
+
+    function stepWeight(idx, delta) {
+      const log = state.logs.find(l => l.id === activeLogId);
+      if (!log) return;
+      const current = log.exercises[idx].weight || '0kg';
+      const match = current.match(/^(\d+(?:[.,]\d+)?)\s*(.*)$/);
+      if (match) {
+        const val = parseFloat(match[1].replace(',', '.'));
+        const unit = match[2] || 'kg';
+        const nextVal = Math.max(0, val + delta);
+        log.exercises[idx].weight = `${nextVal}${unit}`;
+      }
+      saveState();
+      renderModalExercises();
+      renderView();
+    }
+
+    function updateCurrentWorkoutField(field, val) {
+      const log = state.logs.find(l => l.id === activeLogId);
+      if (!log) return;
+      log[field] = val;
+      saveState();
+      renderView();
+    }
+
+    function deleteCurrentWorkout() {
+      if (!confirm('Deseja excluir este registro de treino?')) return;
+      state.logs = state.logs.filter(l => l.id !== activeLogId);
+      saveState();
+      closeWorkoutModal();
+      renderView();
+    }
+
+    function closeWorkoutModal() {
+      document.getElementById('workoutModal').classList.remove('open');
+      activeLogId = null;
+    }
+
+    function closeModalOnBackdrop(e) {
+      if (e.target.id === 'workoutModal') closeWorkoutModal();
+    }
+
+    function formatShortDate(dateStr) {
+      if (!dateStr) return '';
+      const parts = dateStr.split('-');
+      if (parts.length !== 3) return dateStr;
+      return `${parts[2]}/${parts[1]}/${parts[0]}`;
+    }
+
+    // Controle de Tema (Auto / Light / Dark)
+    function applyTheme(pref) {
+      const root = document.documentElement;
+      const btn = document.getElementById('themeBtn');
+      if (pref === 'light') {
+        root.setAttribute('data-theme', 'light');
+        btn.textContent = '☀️ Claro';
+      } else if (pref === 'dark') {
+        root.setAttribute('data-theme', 'dark');
+        btn.textContent = '🌙 Escuro';
+      } else {
+        root.removeAttribute('data-theme');
+        btn.textContent = '🌓 Auto';
+      }
+    }
+
+    function cycleTheme() {
+      const current = localStorage.getItem(THEME_KEY) || 'auto';
+      const next = current === 'auto' ? 'light' : current === 'light' ? 'dark' : 'auto';
+      localStorage.setItem(THEME_KEY, next);
+      applyTheme(next);
+    }
+
+    function exportBackup() {
+      const blob = new Blob([JSON.stringify(state, null, 2)], { type: 'application/json' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = `gym-backup-${new Date().toISOString().split('T')[0]}.json`;
+      a.click();
+    }
+
+    function downloadSelfHtml() {
+      const htmlContent = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+      const blob = new Blob([htmlContent], { type: 'text/html;charset=utf-8' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'index.html';
+      a.click();
+    }
+
+    // Gera ícone PNG em Canvas para o iOS reconhecer na Tela de Início e Spotlight
+    function generateAppleTouchIcon() {
+      try {
+        const canvas = document.createElement('canvas');
+        canvas.width = 180;
+        canvas.height = 180;
+        const ctx = canvas.getContext('2d');
+        ctx.fillStyle = '#191919';
+        ctx.fillRect(0, 0, 180, 180);
+        ctx.font = '100px sans-serif';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText('🏋🏻‍♂️', 90, 95);
+        document.getElementById('apple-icon').href = canvas.toDataURL('image/png');
+      } catch (e) {}
+    }
+
+    // Inicialização
+    applyTheme(localStorage.getItem(THEME_KEY) || 'auto');
+    generateAppleTouchIcon();
+    renderDropdownTemplates();
+    renderView();
+  </script>
+
+</body></html>
