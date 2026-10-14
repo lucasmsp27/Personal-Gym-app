@@ -1,0 +1,1174 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  
+  <!-- Configurações Nativas de Web App (PWA) para iOS / iPhone -->
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="Gym" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="theme-color" content="#191919" media="(prefers-color-scheme: dark)" />
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+
+  <title>Gym</title>
+
+  <!-- Favicon & Apple Touch Icon dinâmico -->
+  <link id="favicon" rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2222%22 fill=%22%23191919%22/><text y=%22.88em%22 x=%2250%%22 text-anchor=%22middle%22 font-size=%2268%22>🏋🏻‍♂️</text></svg>" />
+  <link id="apple-icon" rel="apple-touch-icon" href="" />
+
+  <style>
+    :root {
+      --bg-main: #ffffff;
+      --bg-card: #f7f7f5;
+      --bg-card-hover: #efefed;
+      --bg-modal: #ffffff;
+      --bg-input: #efefed;
+      --text-main: #1f1f1f;
+      --text-muted: #787774;
+      --border-color: #e6e6e4;
+      --accent-blue: #2383e2;
+      --accent-green: #2b9a66;
+      --accent-green-bg: rgba(43, 154, 102, 0.14);
+      --danger: #e03e3e;
+      --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg-main: #191919;
+        --bg-card: #202020;
+        --bg-card-hover: #262626;
+        --bg-modal: #202020;
+        --bg-input: #2a2a2a;
+        --text-main: #ebebeb;
+        --text-muted: #9b9b9b;
+        --border-color: #2f2f2f;
+        --accent-blue: #2383e2;
+        --accent-green: #4dab7f;
+        --accent-green-bg: rgba(77, 171, 127, 0.18);
+        --danger: #eb5757;
+        --shadow: 0 8px 30px rgba(0, 0, 0, 0.45);
+      }
+    }
+
+    html[data-theme="light"] {
+      --bg-main: #ffffff;
+      --bg-card: #f7f7f5;
+      --bg-card-hover: #efefed;
+      --bg-modal: #ffffff;
+      --bg-input: #efefed;
+      --text-main: #1f1f1f;
+      --text-muted: #787774;
+      --border-color: #e6e6e4;
+      --accent-blue: #2383e2;
+      --accent-green: #2b9a66;
+      --accent-green-bg: rgba(43, 154, 102, 0.14);
+      --danger: #e03e3e;
+      --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    }
+
+    html[data-theme="dark"] {
+      --bg-main: #191919;
+      --bg-card: #202020;
+      --bg-card-hover: #262626;
+      --bg-modal: #202020;
+      --bg-input: #2a2a2a;
+      --text-main: #ebebeb;
+      --text-muted: #9b9b9b;
+      --border-color: #2f2f2f;
+      --accent-blue: #2383e2;
+      --accent-green: #4dab7f;
+      --accent-green-bg: rgba(77, 171, 127, 0.18);
+      --danger: #eb5757;
+      --shadow: 0 8px 30px rgba(0, 0, 0, 0.45);
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      margin: 0;
+      padding: env(safe-area-inset-top, 16px) 16px env(safe-area-inset-bottom, 32px) 16px;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      transition: background-color 0.2s, color 0.2s;
+    }
+
+    .container {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding-top: 12px;
+    }
+
+    /* Header */
+    .header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .title-area h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      margin: 0 0 4px 0;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .title-area p {
+      margin: 0;
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+
+    .top-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      background: var(--bg-card);
+      color: var(--text-main);
+      border: 1px solid var(--border-color);
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: background 0.15s;
+    }
+
+    .btn:hover {
+      background: var(--bg-card-hover);
+    }
+
+    .btn-primary {
+      background: var(--accent-blue);
+      color: #ffffff;
+      border-color: var(--accent-blue);
+      font-weight: 600;
+    }
+
+    .btn-primary:hover {
+      opacity: 0.92;
+      background: var(--accent-blue);
+    }
+
+    /* Navigation Tabs + New Button */
+    .toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 10px;
+      margin-bottom: 20px;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .tabs {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      padding-bottom: 2px;
+    }
+
+    .tab-btn {
+      background: transparent;
+      color: var(--text-muted);
+      border: none;
+      padding: 7px 13px;
+      border-radius: 18px;
+      font-size: 0.88rem;
+      font-weight: 500;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .tab-btn.active {
+      background: var(--bg-card);
+      color: var(--text-main);
+      border: 1px solid var(--border-color);
+    }
+
+    .new-dropdown-wrapper {
+      position: relative;
+    }
+
+    .dropdown-menu {
+      position: absolute;
+      right: 0;
+      top: calc(100% + 6px);
+      background: var(--bg-modal);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      box-shadow: var(--shadow);
+      min-width: 240px;
+      z-index: 100;
+      display: none;
+      overflow: hidden;
+    }
+
+    .dropdown-menu.open {
+      display: block;
+    }
+
+    .dropdown-header {
+      padding: 8px 12px;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .dropdown-item {
+      width: 100%;
+      text-align: left;
+      background: none;
+      border: none;
+      color: var(--text-main);
+      padding: 11px 14px;
+      font-size: 0.92rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .dropdown-item:hover {
+      background: var(--bg-card-hover);
+    }
+
+    /* Gallery Grid */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 14px;
+    }
+
+    .workout-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      overflow: hidden;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform 0.12s, background 0.15s;
+    }
+
+    .workout-card:hover {
+      background: var(--bg-card-hover);
+    }
+
+    .card-preview {
+      padding: 14px;
+      font-size: 0.84rem;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      border-bottom: 1px solid var(--border-color);
+      min-height: 155px;
+    }
+
+    .preview-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      line-height: 1.35;
+    }
+
+    .preview-checkbox {
+      width: 15px;
+      height: 15px;
+      border-radius: 3px;
+      border: 1.5px solid var(--text-muted);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+      font-size: 10px;
+      color: #fff;
+    }
+
+    .preview-checkbox.checked {
+      background: var(--accent-blue);
+      border-color: var(--accent-blue);
+    }
+
+    .preview-text.done {
+      text-decoration: line-through;
+      color: var(--text-muted);
+    }
+
+    .card-footer {
+      padding: 11px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .card-title {
+      font-weight: 600;
+      font-size: 0.92rem;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .card-date {
+      font-size: 0.76rem;
+      color: var(--text-muted);
+    }
+
+    .new-page-card {
+      border: 1px dashed var(--border-color);
+      background: transparent;
+      border-radius: 10px;
+      min-height: 190px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      cursor: pointer;
+    }
+
+    .new-page-card:hover {
+      background: var(--bg-card);
+      color: var(--text-main);
+    }
+
+    /* Modal / Notion Page View */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.65);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 200;
+      padding: 12px;
+    }
+
+    .modal-backdrop.open {
+      display: flex;
+    }
+
+    .modal-sheet {
+      background: var(--bg-modal);
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      width: 100%;
+      max-width: 720px;
+      max-height: 92vh;
+      overflow-y: auto;
+      padding: 22px;
+      box-shadow: var(--shadow);
+    }
+
+    .modal-top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+    }
+
+    .dumbbell-icon {
+      font-size: 2.2rem;
+      color: var(--accent-green);
+      margin-bottom: 6px;
+    }
+
+    .page-title-input {
+      width: 100%;
+      background: transparent;
+      border: none;
+      color: var(--text-main);
+      font-size: 1.75rem;
+      font-weight: 700;
+      margin-bottom: 16px;
+      outline: none;
+    }
+
+    .props-grid {
+      display: grid;
+      grid-template-columns: 130px 1fr;
+      row-gap: 10px;
+      column-gap: 12px;
+      align-items: center;
+      font-size: 0.9rem;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border-color);
+      margin-bottom: 18px;
+    }
+
+    .prop-label {
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .prop-input {
+      background: transparent;
+      border: 1px solid transparent;
+      color: var(--text-main);
+      padding: 6px 8px;
+      border-radius: 6px;
+      font-size: 16px;
+      width: 100%;
+    }
+
+    .prop-input:focus {
+      border-color: var(--accent-blue);
+      background: var(--bg-input);
+      outline: none;
+    }
+
+    .location-badge {
+      display: inline-block;
+      background: var(--accent-green-bg);
+      color: var(--accent-green);
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      font-weight: 500;
+    }
+
+    /* Exercise Rows in Modal */
+    .exercise-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .exercise-row {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .exercise-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .exercise-check-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex: 1;
+    }
+
+    .big-checkbox {
+      width: 22px;
+      height: 22px;
+      accent-color: var(--accent-blue);
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    .exercise-name {
+      font-weight: 600;
+      font-size: 1rem;
+    }
+
+    .exercise-name.done {
+      text-decoration: line-through;
+      color: var(--text-muted);
+    }
+
+    .target-presc {
+      color: var(--text-muted);
+      font-size: 0.86rem;
+      font-weight: 500;
+    }
+
+    .last-memory-badge {
+      background: var(--accent-green-bg);
+      color: var(--accent-green);
+      font-size: 0.78rem;
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-weight: 600;
+    }
+
+    .exercise-controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .stepper-group {
+      display: flex;
+      align-items: center;
+      background: var(--bg-input);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .stepper-label {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      padding-left: 10px;
+      padding-right: 4px;
+    }
+
+    .stepper-input {
+      width: 78px;
+      background: transparent;
+      border: none;
+      color: var(--text-main);
+      font-size: 16px;
+      font-weight: 600;
+      text-align: center;
+      padding: 8px 4px;
+      outline: none;
+    }
+
+    .stepper-btn {
+      width: 38px;
+      height: 38px;
+      border: none;
+      background: var(--bg-card);
+      color: var(--text-main);
+      font-size: 1.1rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .stepper-btn:active {
+      background: var(--accent-blue);
+      color: #fff;
+    }
+
+    /* Table & Calendar views */
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+      background: var(--bg-card);
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid var(--border-color);
+    }
+
+    .data-table th, .data-table td {
+      padding: 12px 14px;
+      text-align: left;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .data-table th {
+      color: var(--text-muted);
+      font-weight: 600;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+    }
+
+    @media (max-width: 600px) {
+      .modal-sheet {
+        padding: 16px;
+        max-height: 95vh;
+      }
+      .props-grid {
+        grid-template-columns: 110px 1fr;
+      }
+      .exercise-controls {
+        justify-content: space-between;
+      }
+      .stepper-group {
+        flex: 1;
+        justify-content: space-between;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Top Header -->
+    <div class="header-top">
+      <div class="title-area">
+        <h1><span>🏋🏻‍♂️</span> Gym</h1>
+        <p>Just do it.</p>
+      </div>
+      <div class="top-actions">
+        <button class="btn" id="themeBtn" onclick="cycleTheme()">🌓 Auto</button>
+        <button class="btn" onclick="exportBackup()">💾 Backup JSON</button>
+        <button class="btn btn-primary" onclick="downloadSelfHtml()">⬇️ Baixar index.html (GitHub)</button>
+      </div>
+    </div>
+
+    <!-- Notion Style Toolbar -->
+    <div class="toolbar">
+      <div class="tabs">
+        <button class="tab-btn active" data-view="gallery" onclick="switchView('gallery')">⊞ Gallery view</button>
+        <button class="tab-btn" data-view="progression" onclick="switchView('progression')">📈 Sobrecarga / Cargas</button>
+        <button class="tab-btn" data-view="templates" onclick="switchView('templates')">📋 Templates (A/B/C)</button>
+      </div>
+
+      <div class="new-dropdown-wrapper">
+        <button class="btn btn-primary" onclick="toggleNewMenu(event)">＋ New ▾</button>
+        <div class="dropdown-menu" id="newDropdown">
+          <div class="dropdown-header">Criar treino com memória automática</div>
+          <div id="dropdownTemplatesList"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Content Container -->
+    <div id="viewContainer"></div>
+  </div>
+
+  <!-- Workout Modal -->
+  <div class="modal-backdrop" id="workoutModal" onclick="closeModalOnBackdrop(event)">
+    <div class="modal-sheet">
+      <div class="modal-top-bar">
+        <span style="font-size: 0.82rem; color: var(--text-muted);">✓ Salvo automaticamente no aparelho</span>
+        <div style="display:flex; gap:8px;">
+          <button class="btn" style="color:var(--danger);" onclick="deleteCurrentWorkout()">🗑️ Excluir</button>
+          <button class="btn btn-primary" onclick="closeWorkoutModal()">Concluir</button>
+        </div>
+      </div>
+
+      <div class="dumbbell-icon">🟩</div>
+      <input type="text" id="modalTitle" class="page-title-input" oninput="updateCurrentWorkoutField('title', this.value)" />
+
+      <div class="props-grid">
+        <div class="prop-label">📅 Date</div>
+        <input type="date" id="modalDate" class="prop-input" onchange="updateCurrentWorkoutField('date', this.value)" />
+
+        <div class="prop-label">📍 Location</div>
+        <div><span class="location-badge" id="modalLocation">Itaigara Fitness</span></div>
+
+        <div class="prop-label">⏱️ Tempo (min)</div>
+        <input type="text" id="modalDuration" class="prop-input" placeholder="Ex: 55" oninput="updateCurrentWorkoutField('duration', this.value)" />
+
+        <div class="prop-label">🏃 Km / Pace</div>
+        <input type="text" id="modalCardio" class="prop-input" placeholder="Opcional (ex: 3km - 6'15)" oninput="updateCurrentWorkoutField('cardio', this.value)" />
+      </div>
+
+      <div class="exercise-list" id="modalExercisesList"></div>
+    </div>
+  </div>
+
+  <script>
+    const STORAGE_KEY = 'lucas_gym_notion_pwa_v2';
+    const THEME_KEY = 'lucas_gym_theme_pref';
+
+    const DEFAULT_DATA = {
+      templates: [
+        {
+          id: 'tpl-a',
+          title: 'Treino A - Upper',
+          location: 'Itaigara Fitness',
+          exercises: [
+            { name: 'Puxada alta', target: '3 × 6–10', defaultSets: '3x10', defaultWeight: '4pl' },
+            { name: 'Supino inclinado halteres', target: '3 × 6–10', defaultSets: '3x10', defaultWeight: '9kg' },
+            { name: 'Remada', target: '3 × 8–12', defaultSets: '3x10', defaultWeight: '4pl' },
+            { name: 'Elevação lateral', target: '3 × 10–15', defaultSets: '3x10', defaultWeight: '4kg' },
+            { name: 'Tríceps polia', target: '2 × 10–15', defaultSets: '3x12', defaultWeight: '4pl' }
+          ]
+        },
+        {
+          id: 'tpl-b',
+          title: 'Treino B - Lower + deltoide',
+          location: 'Itaigara Fitness',
+          exercises: [
+            { name: 'Leg press', target: '3 × 6–10', defaultSets: '3x10', defaultWeight: '40kg' },
+            { name: 'Mesa/cadeira flexora', target: '3 × 8–12', defaultSets: '3x12', defaultWeight: '6pl' },
+            { name: 'Cadeira extensora', target: '2 × 10–15', defaultSets: '3x10', defaultWeight: '4pl' },
+            { name: 'Panturrilha', target: '2 × 10–15', defaultSets: '3x12', defaultWeight: '10kg' },
+            { name: 'Elevação lateral', target: '3 × 10–15', defaultSets: '3x10', defaultWeight: '4kg' }
+          ]
+        },
+        {
+          id: 'tpl-c',
+          title: 'Treino C - Upper',
+          location: 'Itaigara Fitness',
+          exercises: [
+            { name: 'Supino reto', target: '3 × 6–10', defaultSets: '3x10', defaultWeight: '3pl' },
+            { name: 'Puxada neutra', target: '3 × 6–10', defaultSets: '3x10', defaultWeight: '3pl' },
+            { name: 'Remada', target: '3 × 8–12', defaultSets: '3x10', defaultWeight: '3pl' },
+            { name: 'Elevação lateral', target: '3 × 10–15', defaultSets: '3x10', defaultWeight: '3pl' },
+            { name: 'Rosca bíceps', target: '2 × 10–15', defaultSets: '2x10', defaultWeight: '5kg' }
+          ]
+        }
+      ],
+      logs: [
+        {
+          id: 'log-1',
+          templateId: 'tpl-a',
+          title: 'Treino A - Upper',
+          date: '2026-10-13',
+          location: 'Itaigara Fitness',
+          duration: '',
+          cardio: '',
+          exercises: [
+            { name: 'Puxada alta', target: '3 × 6–10', setsReps: '3x10', weight: '4pl', done: true },
+            { name: 'Supino inclinado halteres', target: '3 × 6–10', setsReps: '3x10', weight: '9kg', done: true },
+            { name: 'Remada', target: '3 × 8–12', setsReps: '3x10', weight: '4pl', done: true },
+            { name: 'Elevação lateral', target: '3 × 10–15', setsReps: '3x10', weight: '4kg', done: true },
+            { name: 'Tríceps polia', target: '2 × 10–15', setsReps: '3x12', weight: '4pl', done: true }
+          ]
+        },
+        {
+          id: 'log-2',
+          templateId: 'tpl-c',
+          title: 'Treino C - Upper',
+          date: '2026-10-10',
+          location: 'Itaigara Fitness',
+          duration: '',
+          cardio: '',
+          exercises: [
+            { name: 'Supino reto', target: '3 × 6–10', setsReps: '3x10', weight: '3pl', done: true },
+            { name: 'Puxada neutra', target: '3 × 6–10', setsReps: '3x10', weight: '3pl', done: true },
+            { name: 'Remada', target: '3 × 8–12', setsReps: '3x10', weight: '3pl', done: true },
+            { name: 'Elevação lateral', target: '3 × 10–15', setsReps: '3x10', weight: '3pl', done: true },
+            { name: 'Rosca bíceps', target: '2 × 10–15', setsReps: '2x10', weight: '5kg', done: true }
+          ]
+        },
+        {
+          id: 'log-3',
+          templateId: 'tpl-b',
+          title: 'Treino B - Lower + deltoide',
+          date: '2026-10-08',
+          location: 'Itaigara Fitness',
+          duration: '',
+          cardio: '',
+          exercises: [
+            { name: 'Leg press', target: '3 × 6–10', setsReps: '3x10', weight: '40kg', done: true },
+            { name: 'Mesa/cadeira flexora', target: '3 × 8–12', setsReps: '3x12', weight: '6pl', done: true },
+            { name: 'Cadeira extensora', target: '2 × 10–15', setsReps: '3x10', weight: '4pl', done: true },
+            { name: 'Panturrilha', target: '2 × 10–15', setsReps: '3x12', weight: '10kg', done: true },
+            { name: 'Elevação lateral', target: '3 × 10–15', setsReps: '3x10', weight: '4kg', done: true }
+          ]
+        }
+      ]
+    };
+
+    let state = loadState();
+    let currentView = 'gallery';
+    let activeLogId = null;
+
+    function loadState() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (raw) return JSON.parse(raw);
+      } catch (e) {}
+      return JSON.parse(JSON.stringify(DEFAULT_DATA));
+    }
+
+    function saveState() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    }
+
+    // Busca no histórico a última vez que o exercício foi feito
+    function getLastExerciseMemory(exerciseName, excludeLogId = null) {
+      const sortedLogs = [...state.logs].sort((a, b) => (b.date || '').localeCompare(a.date || ''));
+      for (const log of sortedLogs) {
+        if (excludeLogId && log.id === excludeLogId) continue;
+        const found = log.exercises.find(
+          ex => ex.name.trim().toLowerCase() === exerciseName.trim().toLowerCase() && (ex.weight || ex.setsReps)
+        );
+        if (found) {
+          return {
+            setsReps: found.setsReps,
+            weight: found.weight,
+            date: log.date
+          };
+        }
+      }
+      return null;
+    }
+
+    function renderDropdownTemplates() {
+      const container = document.getElementById('dropdownTemplatesList');
+      container.innerHTML = state.templates.map(tpl => `
+        <button class="dropdown-item" onclick="createNewWorkoutFromTemplate('${tpl.id}')">
+          <span>🟩</span>
+          <span>${tpl.title}</span>
+        </button>
+      `).join('');
+    }
+
+    function toggleNewMenu(e) {
+      e.stopPropagation();
+      document.getElementById('newDropdown').classList.toggle('open');
+    }
+
+    document.addEventListener('click', () => {
+      const menu = document.getElementById('newDropdown');
+      if (menu) menu.classList.remove('open');
+    });
+
+    function createNewWorkoutFromTemplate(tplId) {
+      const tpl = state.templates.find(t => t.id === tplId);
+      if (!tpl) return;
+
+      const todayIso = new Date().toISOString().split('T')[0];
+
+      const exercises = tpl.exercises.map(item => {
+        const memory = getLastExerciseMemory(item.name);
+        return {
+          name: item.name,
+          target: item.target,
+          setsReps: memory ? memory.setsReps : item.defaultSets,
+          weight: memory ? memory.weight : item.defaultWeight,
+          lastMemoryText: memory ? `${memory.setsReps} ${memory.weight}`.trim() : null,
+          done: false
+        };
+      });
+
+      const newLog = {
+        id: 'log-' + Date.now(),
+        templateId: tpl.id,
+        title: tpl.title,
+        date: todayIso,
+        location: tpl.location || 'Itaigara Fitness',
+        duration: '',
+        cardio: '',
+        exercises
+      };
+
+      state.logs.unshift(newLog);
+      saveState();
+      renderView();
+      openWorkoutModal(newLog.id);
+    }
+
+    function switchView(view) {
+      currentView = view;
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.view === view);
+      });
+      renderView();
+    }
+
+    function renderView() {
+      const container = document.getElementById('viewContainer');
+      if (currentView === 'gallery') {
+        const cardsHtml = state.logs.map(log => {
+          const previewItems = log.exercises.slice(0, 5).map(ex => {
+            const summary = `${ex.name} — ${ex.target} ${ex.setsReps || ''} ${ex.weight || ''}`.trim();
+            return `
+              <div class="preview-item">
+                <span class="preview-checkbox ${ex.done ? 'checked' : ''}">${ex.done ? '✓' : ''}</span>
+                <span class="preview-text ${ex.done ? 'done' : ''}">${summary}</span>
+              </div>
+            `;
+          }).join('');
+
+          return `
+            <div class="workout-card" onclick="openWorkoutModal('${log.id}')">
+              <div class="card-preview">${previewItems}</div>
+              <div class="card-footer">
+                <div class="card-title"><span>🟩</span> ${log.title}</div>
+                <div class="card-date">${formatShortDate(log.date)}</div>
+              </div>
+            </div>
+          `;
+        }).join('');
+
+        container.innerHTML = `
+          <div class="gallery-grid">
+            ${cardsHtml}
+            <button class="new-page-card" onclick="toggleNewMenu(event)">+ New page</button>
+          </div>
+        `;
+      } else if (currentView === 'progression') {
+        const allExercisesMap = new Map();
+        state.templates.forEach(t => {
+          t.exercises.forEach(e => {
+            if (!allExercisesMap.has(e.name)) {
+              allExercisesMap.set(e.name, { target: e.target, tpl: t.title });
+            }
+          });
+        });
+
+        let rowsHtml = '';
+        allExercisesMap.forEach((info, name) => {
+          const mem = getLastExerciseMemory(name);
+          rowsHtml += `
+            <tr>
+              <td><strong>${name}</strong></td>
+              <td>${info.target}</td>
+              <td><span class="last-memory-badge">${mem ? `${mem.setsReps} •${mem.weight}` : 'Sem registro'}</span></td>
+              <td style="color:var(--text-muted)">${mem ? formatShortDate(mem.date) : '-'}</td>
+            </tr>
+          `;
+        });
+
+        container.innerHTML = `
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Exercício</th>
+                <th>Prescrição Modelo</th>
+                <th>Última Carga & Reps</th>
+                <th>Data</th>
+              </tr>
+            </thead>
+            <tbody>${rowsHtml}</tbody>
+          </table>
+        `;
+      } else if (currentView === 'templates') {
+        container.innerHTML = `
+          <div class="gallery-grid">
+            ${state.templates.map(t => `
+              <div class="workout-card" onclick="createNewWorkoutFromTemplate('${t.id}')">
+                <div class="card-preview">
+                  ${t.exercises.map(e => `
+                    <div class="preview-item">
+                      <span class="preview-checkbox"></span>
+                      <span><strong>${e.name}</strong> — ${e.target}</span>
+                    </div>
+                  `).join('')}
+                </div>
+                <div class="card-footer">
+                  <div class="card-title"><span>🟩</span> ${t.title}</div>
+                  <div class="card-date" style="color:var(--accent-blue);font-weight:600;">Usar modelo →</div>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        `;
+      }
+    }
+
+    function openWorkoutModal(logId) {
+      activeLogId = logId;
+      const log = state.logs.find(l => l.id === logId);
+      if (!log) return;
+
+      document.getElementById('modalTitle').value = log.title;
+      document.getElementById('modalDate').value = log.date || '';
+      document.getElementById('modalLocation').textContent = log.location || 'Itaigara Fitness';
+      document.getElementById('modalDuration').value = log.duration || '';
+      document.getElementById('modalCardio').value = log.cardio || '';
+
+      renderModalExercises();
+      document.getElementById('workoutModal').classList.add('open');
+    }
+
+    function renderModalExercises() {
+      const log = state.logs.find(l => l.id === activeLogId);
+      if (!log) return;
+
+      const listEl = document.getElementById('modalExercisesList');
+      listEl.innerHTML = log.exercises.map((ex, idx) => {
+        const prevMem = getLastExerciseMemory(ex.name, log.id);
+        const badgeText = prevMem ? `↺ Último: ${prevMem.setsReps} ${prevMem.weight}` : '1º registro';
+
+        return `
+          <div class="exercise-row">
+            <div class="exercise-header">
+              <label class="exercise-check-title">
+                <input type="checkbox" class="big-checkbox" ${ex.done ? 'checked' : ''} onchange="toggleExerciseDone(${idx}, this.checked)" />
+                <span class="exercise-name ${ex.done ? 'done' : ''}">${ex.name}</span>
+                <span class="target-presc">— ${ex.target}</span>
+              </label>
+              <span class="last-memory-badge">${badgeText}</span>
+            </div>
+
+            <div class="exercise-controls">
+              <div class="stepper-group">
+                <span class="stepper-label">Séries/Reps</span>
+                <button class="stepper-btn" onclick="stepSetsReps(${idx}, -1)">−</button>
+                <input type="text" class="stepper-input" value="${ex.setsReps || ''}" oninput="updateExerciseField(${idx}, 'setsReps', this.value)" />
+                <button class="stepper-btn" onclick="stepSetsReps(${idx}, 1)">＋</button>
+              </div>
+
+              <div class="stepper-group">
+                <span class="stepper-label">Carga</span>
+                <button class="stepper-btn" onclick="stepWeight(${idx}, -1)">−</button>
+                <input type="text" class="stepper-input" value="${ex.weight || ''}" oninput="updateExerciseField(${idx}, 'weight', this.value)" />
+                <button class="stepper-btn" onclick="stepWeight(${idx}, 1)">＋</button>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function toggleExerciseDone(idx, checked) {
+      const log = state.logs.find(l => l.id === activeLogId);
+      if (!log) return;
+      log.exercises[idx].done = checked;
+      saveState();
+      renderModalExercises();
+      renderView();
+    }
+
+    function updateExerciseField(idx, field, val) {
+      const log = state.logs.find(l => l.id === activeLogId);
+      if (!log) return;
+      log.exercises[idx][field] = val;
+      saveState();
+      renderView();
+    }
+
+    function stepSetsReps(idx, delta) {
+      const log = state.logs.find(l => l.id === activeLogId);
+      if (!log) return;
+      const current = log.exercises[idx].setsReps || '3x10';
+      const match = current.match(/^(\d+)\s*[xX×]\s*(\d+)$/);
+      if (match) {
+        const sets = parseInt(match[1], 10);
+        const reps = Math.max(1, parseInt(match[2], 10) + delta);
+        log.exercises[idx].setsReps = `${sets}x${reps}`;
+      } else {
+        const numMatch = current.match(/(\d+)/);
+        if (numMatch) {
+          const next = Math.max(1, parseInt(numMatch[1], 10) + delta);
+          log.exercises[idx].setsReps = current.replace(/\d+/, next);
+        }
+      }
+      saveState();
+      renderModalExercises();
+      renderView();
+    }
+
+    function stepWeight(idx, delta) {
+      const log = state.logs.find(l => l.id === activeLogId);
+      if (!log) return;
+      const current = log.exercises[idx].weight || '0kg';
+      const match = current.match(/^(\d+(?:[.,]\d+)?)\s*(.*)$/);
+      if (match) {
+        const val = parseFloat(match[1].replace(',', '.'));
+        const unit = match[2] || 'kg';
+        const nextVal = Math.max(0, val + delta);
+        log.exercises[idx].weight = `${nextVal}${unit}`;
+      }
+      saveState();
+      renderModalExercises();
+      renderView();
+    }
+
+    function updateCurrentWorkoutField(field, val) {
+      const log = state.logs.find(l => l.id === activeLogId);
+      if (!log) return;
+      log[field] = val;
+      saveState();
+      renderView();
+    }
+
+    function deleteCurrentWorkout() {
+      if (!confirm('Deseja excluir este registro de treino?')) return;
+      state.logs = state.logs.filter(l => l.id !== activeLogId);
+      saveState();
+      closeWorkoutModal();
+      renderView();
+    }
+
+    function closeWorkoutModal() {
+      document.getElementById('workoutModal').classList.remove('open');
+      activeLogId = null;
+    }
+
+    function closeModalOnBackdrop(e) {
+      if (e.target.id === 'workoutModal') closeWorkoutModal();
+    }
+
+    function formatShortDate(dateStr) {
+      if (!dateStr) return '';
+      const parts = dateStr.split('-');
+      if (parts.length !== 3) return dateStr;
+      return `${parts[2]}/${parts[1]}/${parts[0]}`;
+    }
+
+    // Controle de Tema (Auto / Light / Dark)
+    function applyTheme(pref) {
+      const root = document.documentElement;
+      const btn = document.getElementById('themeBtn');
+      if (pref === 'light') {
+        root.setAttribute('data-theme', 'light');
+        btn.textContent = '☀️ Claro';
+      } else if (pref === 'dark') {
+        root.setAttribute('data-theme', 'dark');
+        btn.textContent = '🌙 Escuro';
+      } else {
+        root.removeAttribute('data-theme');
+        btn.textContent = '🌓 Auto';
+      }
+    }
+
+    function cycleTheme() {
+      const current = localStorage.getItem(THEME_KEY) || 'auto';
+      const next = current === 'auto' ? 'light' : current === 'light' ? 'dark' : 'auto';
+      localStorage.setItem(THEME_KEY, next);
+      applyTheme(next);
+    }
+
+    function exportBackup() {
+      const blob = new Blob([JSON.stringify(state, null, 2)], { type: 'application/json' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = `gym-backup-${new Date().toISOString().split('T')[0]}.json`;
+      a.click();
+    }
+
+    function downloadSelfHtml() {
+      const htmlContent = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+      const blob = new Blob([htmlContent], { type: 'text/html;charset=utf-8' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'index.html';
+      a.click();
+    }
+
+    // Gera ícone PNG em Canvas para o iOS reconhecer na Tela de Início e Spotlight
+    function generateAppleTouchIcon() {
+      try {
+        const canvas = document.createElement('canvas');
+        canvas.width = 180;
+        canvas.height = 180;
+        const ctx = canvas.getContext('2d');
+        ctx.fillStyle = '#191919';
+        ctx.fillRect(0, 0, 180, 180);
+        ctx.font = '100px sans-serif';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText('🏋🏻‍♂️', 90, 95);
+        document.getElementById('apple-icon').href = canvas.toDataURL('image/png');
+      } catch (e) {}
+    }
+
+    // Inicialização
+    applyTheme(localStorage.getItem(THEME_KEY) || 'auto');
+    generateAppleTouchIcon();
+    renderDropdownTemplates();
+    renderView();
+  </script>
+</body>
+</html>
